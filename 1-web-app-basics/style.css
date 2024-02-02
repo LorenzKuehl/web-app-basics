@@ -1,0 +1,48 @@
+html {
+  box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.body {
+  transition: 0.5s ease-in-out background-image;
+  background-image: url(pics/istockphoto-1470710940-1024x1024.jpg);
+}
+
+.body--dark {
+  background-image: url(pics/gratisography-cyber-kitty-800x525.jpg);
+}
+
+.button {
+  font-size: 2rem;
+  cursor: pointer;
+  font-family: monospace;
+  border: 5px solid #333;
+  padding: 0.5rem 1rem;
+  background-color: white;
+  border-radius: 2px;
+  color: #333;
+}
+
+.button-dark {
+  border: 5px solid snow;
+  background-color: #333;
+  color: rgb(239, 13, 168);
+  box-shadow: 0 0 5px chartreuse, 0 0 10px chartreuse, 0 0 20px yellow;
+}

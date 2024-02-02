@@ -1,0 +1,34 @@
+html {
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+input {
+  font-size: 2rem;
+  border: 1px solid black;
+  margin-right: 3rem;
+}
+
+button {
+  font-size: 2rem;
+  font-family: monospace;
+  border: 1px solid black;
+  border-radius: 0.5rem;
+}
