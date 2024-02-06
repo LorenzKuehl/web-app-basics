@@ -28,45 +28,34 @@ if (savedState) {
   state = JSON.parse(savedState);
 }
 
+//Action functions
+function createTaskElement(task) {
+  const liTask = document.createElement("li");
+  ul.append(liTask);
+  liTask.textContent = task.description;
+  const input = document.createElement("input");
+  liTask.append(input);
+  input.setAttribute("type", "checkbox");
+  input.addEventListener("change", () => (task.done = !task.done));
+  if (task.done === true) {
+    input.checked = true;
+  }
+}
+
 //Render function
 function render() {
   localStorage.setItem("savedTasks", JSON.stringify(state));
   ul.innerHTML = "";
   state.todos.forEach((task) => {
-    // Hier if statement zur Abfrage, ob done true oder false ist
     if (filter === "all") {
-      const liTask = document.createElement("li");
-      ul.append(liTask);
-      liTask.textContent = task.description;
-      const input = document.createElement("input");
-      liTask.append(input);
-      input.setAttribute("type", "checkbox");
-      input.addEventListener("change", () => (task.done = !task.done));
-      if (task.done === true) {
-        input.checked = true;
-      }
+      createTaskElement(task);
     } else if (filter === "open" && task.done === false) {
-      const liTask = document.createElement("li");
-      ul.append(liTask);
-      liTask.textContent = task.description;
-      const input = document.createElement("input");
-      liTask.append(input);
-      input.setAttribute("type", "checkbox");
-      input.addEventListener("change", () => (task.done = !task.done));
+      createTaskElement(task);
     } else if (filter === "done" && task.done === true) {
-      const liTask = document.createElement("li");
-      ul.append(liTask);
-      liTask.textContent = task.description;
-      const input = document.createElement("input");
-      liTask.append(input);
-      input.setAttribute("type", "checkbox");
-      input.addEventListener("change", () => (task.done = !task.done));
-      input.checked = true;
+      createTaskElement(task);
     }
   });
 }
-
-//Action functions
 
 // Event Listener
 allRadio.addEventListener("click", function () {
@@ -95,27 +84,31 @@ addBtn.addEventListener("click", function () {
   const description = inputDescription.toLowerCase();
   const id = Date.now().toString();
 
-  // Überprüfen, ob der Eintrag nicht leer und länger als 5 Zeichen ist
-  if (inputDescription && inputDescription.length > 5) {
-    // Überprüfen, ob der Eintrag in der Liste schon vorhanden ist
-    if (
-      !state.todos.some(
-        (task) => task.description.toLowerCase() === description
-      )
-    ) {
-      state.todos.push({
-        description: inputDescription,
-        done: false,
-        id,
-      });
-    } else {
-      alert("Ups! Sieht so aus als wäre dein ToDo bereits in der Liste.");
-    }
-  } else {
+  // Checken ob der text-input nicht leer und länger als 5 Zeichen ist
+  if (!inputDescription || inputDescription.length <= 4) {
     alert("Oha! Dein ToDo muss mindestens 5 Zeichen lang sein.");
+    return;
   }
-  // Den Eintragsbereich leeren, nachdem der Eintrag gemacht wurde
+
+  // Checken ob der task bereits in der list ist
+  if (
+    state.todos.some((task) => task.description.toLowerCase() === description)
+  ) {
+    alert("Ups! Sieht so aus als wäre dein ToDo bereits in der Liste.");
+    return;
+  }
+
+  // Den task zur list pushen
+  state.todos.push({
+    description: inputDescription,
+    done: false,
+    id,
+  });
+
+  // Das text-input-field clearen
   taskInp.value = "";
+
+  // Render
   render();
 });
 
